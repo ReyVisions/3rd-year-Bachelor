@@ -1,6 +1,7 @@
 # Group Project Report: Coin Contour Detection
 
 **Author**: Remy XU
+
 **Project type**: Group Project of 4 students
 
 ## Summary
