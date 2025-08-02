@@ -1,4 +1,4 @@
-# Project 2: Mona Lisa
+# Project: Algorithmics and image processing on Mona Lisa
 
 **Author**: Remy XU
 **Project type**: College individual project
