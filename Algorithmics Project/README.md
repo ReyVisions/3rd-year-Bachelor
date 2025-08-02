@@ -1,7 +1,7 @@
 # Project 2: Mona Lisa
 
 **Author**: Remy XU
-**Student ID**: 22123345
+**Project type**: College individual project
 
 ## Description
 
