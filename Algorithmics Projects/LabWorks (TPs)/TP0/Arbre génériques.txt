@@ -1,0 +1,88 @@
+Afin de réaliser un arbre générique, c'est à dire un arbre N-aire, on peut s'y prendre de plusieurs manières:
+
+1) Si on veut trier les éléments, on crée dans la structure node (noeud) deux tableaux: Un avec les noeuds de key inférieurs, l'autre avec les noeuds de key supérieurs.
+
+typedef struct node{
+    unsigned int key;
+    int nbinf;
+    int nbsup;
+    struct node* TabInf[N];								        //Liste des fils de key inférieurs au key de ce noeud.
+    struct node* TabSup[N];                                                                     //Liste des fils de key supérieurs au key de ce noeud.
+}node ;
+
+Le pseudo code sera alors le suivant (en c):
+
+Fonction addNode en pseudo code (variables un peu similaires au code):
+
+ENTREE: Arbre A, entier Key_x
+SORTIE: n/a
+
+Noeud tmpNode=Noeud de la racine de A                                              		//Noeud temporaire qui va changer lors des boucles
+
+On créé un noeud contenant la clé Key_x appelé elem
+elem.key <-Key_x
+
+pour i de 1 à PartieEntiereInf(N/2), faire elem->TabInf[n]=null
+pour i de 1 à PartieEntiereSup(N/2), faire elem->TabSup[n]=null
+
+Tant que (tmpNode.nbinf=PartieEntiereInf(N/2) et tmpNode.nbsup=PartieEntiereSup(N/2)):          //Equivalent à tmpNode a tous ses fils remplis.
+	|Si elem.key >tmpNode.key, 
+	|	i=0
+		Si elem.key>tmpNode.TabSup[nbsup-1].key						//Si elem.key est le plus grand, on attribue le dernier fils du tmpNode au nouveau node
+			tmpNode = tmpNode.TabSup[nbsup]
+		Sinon										//Sinon on cherche la première clé supérieure à elem.key (En supposant qu'elle soit triée voir INDEX1)
+			
+	|		Tant que i <tmpNode.nbsup, 
+	|			si elem.key<tmpNode.TabSup[i].key,                              // On choisit le premier noeud avec une clé supérieur à celle de elem
+	|				tmpNode= tmpNode.TabSup[i]
+					i=tmpNode.nbsup                                         //Quand on remplace le tmpNode, on force la sortie de la boucle while
+				i+=1
+				
+	|		
+	|Sinon											//Même raisonnement pour TabInf.
+		i=0
+		Si elem.key>tmpNode.TabInf[nbinf-1].key
+			tmpNode = tmpNode.TabInf[nbinf]
+		Sinon
+			Tant que  pour i<tmpNode.nbinf,                                                       
+				si elem.key<Node.TabInf[i].key,
+					tmpNode= tmpNode.TabInf[i]
+					i=tmpNode.nbinf
+				i+=1
+
+Si elem.key >tmpNode.key,
+	Si tmpNode.nbsup=0,
+		TabSup[0]=elim, 									         //Si TabSup est vide, on attribue directement le fils.
+	sinon:                                                
+		i=0
+		Si elem.key>tmpNode.TabSup[nbsup-1].key
+			elem dans tmpNode.TabSup[nbsup]
+			nbsup+=1
+		Sinon
+			Tant que i<tmpNode.nbsup,                                                                //On place elem dans TabSup en respectant la coissance du tableau de noeuds.
+  				si elem.key<tmpNode.TabSup[i].key,
+					on place elem dans tmpNode.TabSup[i] en décalant les fils suivants.      //INDEX1 Finalement à chaque fois que l'on place un elem,
+					i=tmpNode.nbsup                                                          //on respecte la croissance dans les tab (inf ou sup). (On peut le prouver par récurrence)
+					nbsup+=1
+				i+=1
+			
+		
+Sinon                                                                                                            //Raisonnement équivalent dans  TabInf.
+	Si tmpNode.nbinf=0, 
+		TabInf[0]=elim, 
+	sinon:
+		i=0
+		Si elem.key>tmpNode.TabSup[nbinf-1].key
+			elem dans tmpNode.TabInf[nbinf]
+			nbinf+=1
+		Sinon
+			Tant que i<tmpNode.nbinf,
+  				si elem.key<tmpNode.TabInf[i].key,
+					on place elem dans tmpNode.TabInf[i] en décalant les fils suivants.
+					i=tmpNode.nbinf-1
+					nbinf+=1
+			
+				i+=1
+
+//Pour un tmpNode donné, si son tabsup ou son tabinf a un seul tableau rempli mais pas l'autre, 
+//cela fonctionne quand même. On se retrouve dans le cas où les deux tableaux ne sont pas pleins
