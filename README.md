@@ -42,7 +42,7 @@ This repository is not intended to be improved, but it is mainly used as a portf
 
 If you have any questions or would like to get in touch, you can reach me at:
 
-email: remyxu2000@gmail.com
+email: reyvisionz@gmail.com
 
 
 Thank you for visiting my repository!
