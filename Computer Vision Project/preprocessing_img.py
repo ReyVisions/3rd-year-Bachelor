@@ -6,7 +6,8 @@ import os
 img_dir = "C:/Users/triqu/Documents/Image/Image_Dataset/Projet_Image/Images"
 
 # preprocessed images files
-output_ppd_dir = r"C:\Users\remyx\OneDrive\Bureau\Projet image\Contours 71-140"
+output_ppd_dir = "C:/Users/triqu/Documents/Image/Image_Dataset/Projet_Image/preprocessed_img"
+output_contour_dir = "C:/Users/triqu/Documents/Image/Image_Dataset/Projet_Image/test_countours"
 
 for img in os.listdir(img_dir):
       if img.endswith(".jpg") or img.endswith(".JPG") or img.endswith(".png") or img.endswith(".jpeg"):

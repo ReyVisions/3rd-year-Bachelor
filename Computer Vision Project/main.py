@@ -5,9 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pprint import pprint
 
-dossier_image_preprocessed = r"C:\Users\remyx\OneDrive\Bureau\Projet image\Contours 71-140"
-dossier_json = r"C:\Users\remyx\OneDrive\Bureau\Projet image\json_files"
-dossier_sortie = r"C:\Users\remyx\OneDrive\Bureau\Projet image\contours2"
+dossier_image_preprocessed = "/Users/gabriel/Documents/Projet_Image/preprocessed_img"
+dossier_json = "/Users/gabriel/Documents/Projet_Image/json_files"
+dossier_sortie = "/Users/gabriel/Documents/Projet_Image/img_contour"
 
 pieces_trouvees_total = {}
 verites_terrain_total = {}
@@ -21,7 +21,7 @@ def count_coins(contours_dict, contours_found):
     for contour in contours_found:
         (x, y), radius = cv2.minEnclosingCircle(contour)
         for label, (cx, cy, cr) in contours_dict.items():
-            if abs(cx - x) < 65 and abs(cy - y) < 65 and abs(cr - radius) < 65:
+            if abs(cx - x) < 50 and abs(cy - y) < 50 and abs(cr - radius) < 50:
                 coin_counts[label] += 1
     return coin_counts
 
@@ -131,7 +131,7 @@ for fichier_preprocessed in os.listdir(dossier_image_preprocessed):
                     if abs(cx - x) < 50 and abs(cy - y) < 50 and abs(cr - radius) < 50: # on compare les contours avec le json pour détecter le type de pièce
                         unified_label = label_mapping.get(label, label) 
                         print(f"Contour correspondant a {unified_label}\n")
-                    
+            
             output_contour_path = os.path.join(dossier_sortie, fichier_preprocessed).replace("\\", "/") # on download les images avec contours
             cv2.imwrite(output_contour_path, contour_img)
             
@@ -169,9 +169,9 @@ def recup_souslistes(dict):
 pieces_trouvees = recup_souslistes(pieces_trouvees_total)
 verites_total = recup_souslistes(ground_truth_counts)
 
-print(pieces_trouvees)
+#print(pieces_trouvees)
 
-print(verites_total)
+#print(verites_total)
 
 def MSE(X,Y):
     """
@@ -216,7 +216,6 @@ if len(pieces_trouvees) == len(verites_total):
 else:
     print("Les listes n'ont pas la même taille.")
 
-print(len(verites_total))
 print("MAE total : "+ str(MAE_TOTAL))
 print("MSE total : "+ str(MSE_TOTAL))
 
